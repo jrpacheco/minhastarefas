@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Entity.Lista.ListaEntity>
+
+@{
+    ViewBag.Title = "Listas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listas</h2>
+
+@if (Model.Count() < 1)
+{
+    <p>
+        @Html.ActionLink("Criar uma lista de tarefas agora?", "Create")
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataAlteracao)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Nome, "Index", "Tarefa", new { IdLista = item.Id }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataAlteracao)
+            </td>
+            <td>
+                @Html.ActionLink("(+) Tarefa", "Create", "Tarefa", new { IdLista = item.Id }, null) |
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

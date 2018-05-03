@@ -1,0 +1,100 @@
+﻿@model Entity.Lista.ListaEntity
+
+@{
+    ViewBag.Title = "Nova Lista";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Nova Lista</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Ativo)
+                    @Html.ValidationMessageFor(model => model.Ativo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Criar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+    <div>
+        @Html.ActionLink("Voltar para lista", "Index")
+    </div>
+}
+<script type="text/javascript">
+
+    $(document).ready(function (e) {
+        $("#formLista").submit(function (e) {
+            if ($("#formLista").valid() != false) {
+                e.preventDefault();
+                var acaoUrl = e.currentTarget.action;
+                CriarLista(acaoUrl);
+            }
+        });
+    });
+
+    function CriarLista(acaoUrl) {
+        var dadosSerializados = $('#formLista').serialize();
+        $.ajax({
+            type: "POST",
+            url: acaoUrl,
+            //os parametros que serao enviados por parametro, no caso é o objeto ListaEntity que tenho no formulário
+            //a partir dos names, ele reconhece que é daquele objeto.
+            data: dadosSerializados,
+            success: function (data) {
+                swal({
+                    title: "Minhas Tarefas",
+                    text: data.Mensagem,
+                    type: "success"
+                });
+
+                LimpaFormulario();
+            },
+            error: function (xhr) {
+                try {
+                    var json = $.parseJSON(xhr.responseText);
+                    swal({
+                        title: "Erro",
+                        text: json.errorMessage,
+                        type: "error"
+                    });
+                } catch (e) {
+                    swal({
+                        title: "Erro",
+                        text: "Ops, algo de errado aconteceu!",
+                        type: "error"
+                    });
+                }
+            }
+        });
+    }
+
+    function LimpaFormulario() {
+        $('#formLista').each(function () {
+            this.reset();
+        });
+    }
+</script>

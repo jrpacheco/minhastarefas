@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Entity.Tarefa.TarefaGridEntity>
+
+@{
+    ViewBag.Title = "Tarefas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tarefas</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeTarefa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Importante)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prioridade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataAlteracao)            
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeTarefa)                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Importante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prioridade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataAlteracao)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id, IdLista = item.IdLista }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = item.Id, IdLista = item.IdLista })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Voltar para lista", "Index", "Lista")

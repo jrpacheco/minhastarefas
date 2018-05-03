@@ -1,0 +1,69 @@
+﻿@model Entity.Tarefa.TarefaEntity
+
+@{
+    ViewBag.Title = "Excluir Tarefa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Deletar Tarefa</h2>
+
+<h3>Você deseja realmente excluir essa tarefa?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Importante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Importante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Prioridade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Prioridade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ativo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataAlteracao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataAlteracao)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.IdLista)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-default" /> |
+            @Html.ActionLink("Voltar para lista", "Index", "Tarefa", new { IdLista = Model.IdLista }, null)
+        </div>
+    }
+</div>
